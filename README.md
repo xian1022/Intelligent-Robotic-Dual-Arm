@@ -35,7 +35,7 @@
 | ROS 端 | 任務協調、雙臂狀態機、MoveIt 2 規劃、B 站互鎖、C 站選格及各端通訊 | 待加入 | 加入時補上模組 README、環境設定與啟動方式 |
 | 視覺端 | 三相機影像、物件定位、A／B 占用、C 站格位辨識及校正 | 待加入 | 加入時補上模組 README、相機設定與校正流程 |
 | ESP32 端 | 雙吸盤吸附／釋放控制，規劃以 micro-ROS 對接 ROS | 待加入 | 加入時補上模組 README、接線、燒錄與通訊規格 |
-| CM-530 端 | AX-12A 關節控制、位置回讀、HOME、HOLD、torque 與 LED | 已收錄第 17 版／協定 5 | [操作與建置][firmware-readme] · [通訊規格][interface] · [驗證紀錄][firmware-validation] |
+| CM-530 端 | AX-12A 關節控制、位置回讀、HOME、HOLD、torque 與 LED | 已收錄第 17 版／協定 5 | [操作與建置][firmware-readme] · [通訊規格][interface] |
 
 「待加入」表示程式尚未收錄至本儲存庫；前期開發與測試成果見[目前成果與開發進度](#progress)。各模組加入後，會同步更新本表與下方目錄結構。
 
@@ -220,16 +220,14 @@ ROS 端負責整合視覺結果、規劃路徑與協調致動。視覺端提供�
 
 ## 目前成果與開發進度
 
-截至 2026-10-07，依作品構想書及韌體驗證紀錄整理如下。
+截至 2026-10-07，專案成果與模組整合進度如下。
 
 | 項目 | 狀態與證據範圍 |
 |---|---|
 | 電腦指令 → CM-530 → AX-12A | 構想書記錄前期單臂 AX 移動與 HOME 返回實體測試 |
 | ROS 2／Docker、手臂模型與 MoveIt 2 | 已建立前期環境與整合介面；畫面仍有軌跡遭拒紀錄 |
 | 視覺 Service 座標請求 | 程式建置與基本測試已有紀錄；自動實體取放穩定性待驗證 |
-| 第 17 版雙臂韌體與測試終端 | 已提供 AX、HOME、GET_HOME、READ、HOLD、TORQUE、LED |
-| 第 17 版離線驗證 | [驗證紀錄][firmware-validation]記載 Python 25/25、C 邏輯／LED 測試及 ARM 映像檢查通過 |
-| 第 17 版燒錄及 HOME／READ／HOLD 實機測試 | 待驗收，不以離線結果取代實機證據 |
+| CM-530 端 | 已收錄第 17 版韌體與對接文件 |
 | 三相機校正、雙臂交接與 B 站互鎖 | 待整合驗證 |
 | ESP32／micro-ROS 雙吸盤介面 | 待整合驗證 |
 | C 站八格決策、滿格續行及全流程效能 | 已定義設計與驗證方式，尚無完整實測數據 |
@@ -259,19 +257,7 @@ git clone https://github.com/xian1022/Intelligent-Robot-Arm.git
 cd Intelligent-Robot-Arm
 ```
 
-先由[模組入口](#modules)確認所需程式是否已收錄，再依各模組 README 安裝、設定及測試。目前可使用 CM-530 第 17 版韌體與測試終端；ROS、視覺及 ESP32 程式待加入，完整系統的統一啟動方式將在整合後補上。
-
-### 目前可執行的 CM-530 終端自我測試
-
-在本儲存庫根目錄執行：
-
-```powershell
-cd "17 ROS to CM530 ver. dual arm"
-python -m pip install -r requirements.txt
-python manual_position_terminal.py --self-test
-```
-
-實機連線、HOME 校正、建置與燒錄請依[模組操作說明][firmware-readme]執行；ROS 與手動終端不可同時占用同一序列埠。這項自我測試僅驗證終端功能，完整系統仍須分階段驗收。
+先由[模組入口](#modules)確認所需程式是否已收錄，再依各模組 README 安裝、設定及測試。目前已收錄 CM-530 第 17 版韌體；ROS、視覺及 ESP32 程式待加入，完整系統的統一啟動方式將在整合後補上。
 
 ### 後續模組加入方式
 
@@ -315,7 +301,7 @@ ROS、視覺與 ESP32 端加入時，各自提供程式與 README，說明執行
 ```text
 Intelligent-Robot-Arm/
 ├── README.md
-├── 17 ROS to CM530 ver. dual arm/   # 韌體原始碼、SDK、HEX／BIN、測試與對接文件
+├── 17 ROS to CM530 ver. dual arm/   # 韌體原始碼、SDK、HEX／BIN 與模組文件
 └── docs/
     └── images/
         ├── dual-arm-system-overview.png   # 構想書系統架構圖
@@ -335,7 +321,7 @@ ROS 端、視覺端與 ESP32 端將各自加入模組目錄；實際名稱與路
 
 1. 《海事資訊科技系－作品構想書－視覺導引雙臂協同搬運系統－參考文獻修訂版 (2)》：專案動機、設計、前期成果、圖像及效能驗證規劃。
 2. `流程圖.png`：雙臂並行分支、Home_A／Home_C、B 站互鎖、異常等待與滿格續行。
-3. [CM530_ROS_BRIDGE 第 17 版文件][firmware-readme]：新版控制介面及驗證進度；本次核對版本為 [`e333c16`](https://github.com/xian1022/CM530_ROS_BRIDGE/commit/e333c162d2b21efc05fad47182741caa23ab6a59)。
+3. [CM530_ROS_BRIDGE 第 17 版文件][firmware-readme]：新版控制介面；本次核對版本為 [`e333c16`](https://github.com/xian1022/CM530_ROS_BRIDGE/commit/e333c162d2b21efc05fad47182741caa23ab6a59)。
 
 架構圖與前期成果照片由指定構想書擷取，流程圖保留原始圖檔。下列參考文獻沿用構想書；其中原記載的檢索日期為 2026-10-01。
 
@@ -357,5 +343,4 @@ ROS 端、視覺端與 ESP32 端將各自加入模組目錄；實際名稱與路
 
 [firmware-readme]: 17%20ROS%20to%20CM530%20ver.%20dual%20arm/README.md
 [interface]: 17%20ROS%20to%20CM530%20ver.%20dual%20arm/ROS_CM530_INTERFACE_SPEC.md
-[firmware-validation]: 17%20ROS%20to%20CM530%20ver.%20dual%20arm/VALIDATION.md
 [arm-config]: 17%20ROS%20to%20CM530%20ver.%20dual%20arm/APP/inc/arm_config.h
