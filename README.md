@@ -2,7 +2,7 @@
 
 以 **Orin、ROS 2、三路視覺與雙機械手臂**建構小型物件搬運原型，讓手臂 1 完成 **A → B** 供料交接，手臂 2 完成 **B → C** 搬運與 **2 × 4 八格排列**。系統依據現場影像決定取放時機，透過 B 站互鎖管理共用工作區，並在 C 站選擇編號最小的空格放置物件。
 
-本專案為海事資訊科技系「海事學院第八屆學生專題製作競賽暨成果展」海事實作組作品。本儲存庫提供系統設計、作業流程、整合進度及驗證規劃；CM-530 韌體與測試工具另維護於 [CM530_ROS_BRIDGE](https://github.com/xian1022/CM530_ROS_BRIDGE)。
+本專案為海事資訊科技系「海事學院第八屆學生專題製作競賽暨成果展」海事實作組作品。本儲存庫提供系統設計、作業流程、整合進度及驗證規劃；本儲存庫亦收錄[第 17 版 CM-530 韌體與測試工具][firmware-readme]，來源為 [CM530_ROS_BRIDGE](https://github.com/xian1022/CM530_ROS_BRIDGE)。
 
 > **目前階段：子系統已具前期測試成果，雙臂全流程仍在整合。** 構想書記錄的單臂實測、第 17 版韌體的離線驗證，以及預期的雙臂自動搬運成果，在下文分別標示；本儲存庫目前不含可直接啟動完整系統的 ROS 套件。
 
@@ -265,15 +265,14 @@ git clone https://github.com/xian1022/Intelligent-Robot-Arm.git
 cd Intelligent-Robot-Arm
 ```
 
-本儲存庫目前以 README 與圖像為主；ROS 節點、launch 檔、校正參數與 ESP32 程式尚未收錄，因此目前沒有全系統一鍵啟動指令。
+本儲存庫包含系統文件、圖像與第 17 版 CM-530 韌體；ROS 節點、launch 檔、校正參數與 ESP32 程式尚未收錄，因此目前沒有全系統一鍵啟動指令。
 
 ### 取得 CM-530 韌體與終端
 
-另開終端，取得韌體儲存庫並進入第 17 版資料夾：
+完成上方 clone 後，在本儲存庫根目錄進入第 17 版資料夾：
 
 ```powershell
-git clone https://github.com/xian1022/CM530_ROS_BRIDGE.git
-cd "CM530_ROS_BRIDGE/17 ROS to CM530 ver. dual arm"
+cd "17 ROS to CM530 ver. dual arm"
 python -m pip install -r requirements.txt
 python manual_position_terminal.py --self-test
 ```
@@ -327,6 +326,7 @@ ROS 與手動終端不可同時占用序列埠。先執行 VERSION／PING、GET_
 ```text
 Intelligent-Robot-Arm/
 ├── README.md
+├── 17 ROS to CM530 ver. dual arm/   # 韌體原始碼、SDK、HEX／BIN、測試與對接文件
 └── docs/
     └── images/
         ├── dual-arm-system-overview.png   # 構想書系統架構圖
@@ -360,7 +360,7 @@ Intelligent-Robot-Arm/
 10. snt-spacer. [phantomx_pincher](https://github.com/snt-spacer/phantomx_pincher). GitHub 原始碼儲存庫。
 11. OpenCV. [Camera Calibration and 3D Reconstruction](https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html).
 
-[firmware-readme]: https://github.com/xian1022/CM530_ROS_BRIDGE/blob/main/17%20ROS%20to%20CM530%20ver.%20dual%20arm/README.md
-[interface]: https://github.com/xian1022/CM530_ROS_BRIDGE/blob/main/17%20ROS%20to%20CM530%20ver.%20dual%20arm/ROS_CM530_INTERFACE_SPEC.md
-[firmware-validation]: https://github.com/xian1022/CM530_ROS_BRIDGE/blob/main/17%20ROS%20to%20CM530%20ver.%20dual%20arm/VALIDATION.md
-[arm-config]: https://github.com/xian1022/CM530_ROS_BRIDGE/blob/main/17%20ROS%20to%20CM530%20ver.%20dual%20arm/APP/inc/arm_config.h
+[firmware-readme]: 17%20ROS%20to%20CM530%20ver.%20dual%20arm/README.md
+[interface]: 17%20ROS%20to%20CM530%20ver.%20dual%20arm/ROS_CM530_INTERFACE_SPEC.md
+[firmware-validation]: 17%20ROS%20to%20CM530%20ver.%20dual%20arm/VALIDATION.md
+[arm-config]: 17%20ROS%20to%20CM530%20ver.%20dual%20arm/APP/inc/arm_config.h
